@@ -1,7 +1,10 @@
+{% let enable = length(radius_proxy) %}
+{% services.set_enabled("radsecproxy", enable) %}
+{% if (!enable) return %}
 {%
 	if (!radius_proxy.host || !radius_proxy.port || !radius_proxy.secret) {
 		warn("Can't start radius-proxy due to missing settings.");
-
+		services.set_enabled("radsecproxy", false);
 		return;
 	}
 %}
